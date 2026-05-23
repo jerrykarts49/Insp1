@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Back to School</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #0e0e0e;
+    --cream: #f5f0e8;
+    --gold: #c8972a;
+    --rust: #c04b2d;
+    --sage: #4a6741;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    overflow-x: hidden;
+  }
+
+  .poster {
+    max-width: 680px;
+    width: 100%;
+    position: relative;
+  }
+
+  /* Decorative lines */
+  .rule-top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+  }
+  .rule-top::before, .rule-top::after {
+    content: '';
+    flex: 1;
+    height: 1.5px;
+    background: var(--ink);
+  }
+  .rule-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+
+  /* Eyebrow */
+  .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  /* Hero headline */
+  .headline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.3s;
+  }
+  .headline em {
+    font-style: italic;
+    color: var(--rust);
+  }
+  .headline .lined {
+    position: relative;
+    display: inline-block;
+  }
+  .headline .lined::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: lineReveal 0.6s ease forwards 1s;
+  }
+
+  /* Divider accent */
+  .accent-bar {
+    width: 60px;
+    height: 4px;
+    background: var(--sage);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.5s;
+  }
+
+  /* Body copy */
+  .body-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    font-weight: 300;
+    color: #2a2a2a;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.6s;
+  }
+  .body-text strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* Pull quotes */
+  .quotes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.75s;
+  }
+  .quote-card {
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1rem 1rem 1.2rem;
+    background: rgba(200, 151, 42, 0.06);
+  }
+  .quote-card:nth-child(2) { border-color: var(--rust); background: rgba(192, 75, 45, 0.06); }
+  .quote-card:nth-child(3) { border-color: var(--sage); background: rgba(74, 103, 65, 0.06); }
+  .quote-card:nth-child(4) { border-color: var(--ink); background: rgba(14,14,14,0.04); }
+  .quote-card p {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .quote-card span {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #888;
+    margin-top: 0.6rem;
+  }
+
+  /* Closing */
+  .closing {
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #2a2a2a;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.9s;
+  }
+  .closing .big {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  /* Footer rule */
+  .rule-bottom {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 1s;
+  }
+  .rule-bottom::before, .rule-bottom::after {
+    content: '';
+    flex: 1;
+    height: 1.5px;
+    background: var(--ink);
+  }
+  .season-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--sage);
+  }
+
+  /* Background texture dots */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(14,14,14,0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .poster { position: relative; z-index: 1; }
+
+  /* Editor profile */
+  .editor-profile {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 2rem;
+    padding: 1.2rem 1.4rem;
+    border: 1.5px solid rgba(14,14,14,0.12);
+    background: rgba(255,255,255,0.55);
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 1.1s;
+  }
+  .editor-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--rust));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+  .editor-info {
+    flex: 1;
+  }
+  .editor-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: 0.25rem;
+  }
+  .editor-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .editor-email {
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .editor-email:hover { color: var(--rust); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes lineReveal {
+    to { transform: scaleX(1); }
+  }
+
+  @media (max-width: 520px) {
+    .quotes-grid { grid-template-columns: 1fr; }
+    .headline { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+<article class="poster">
+
+  <div class="rule-top">
+    <span class="rule-label">A Letter to Every Student</span>
+  </div>
+
+  <p class="eyebrow">Back to School &nbsp;·&nbsp; New Season, New Chapter</p>
+
+  <h1 class="headline">
+    Show Up.<br>
+    <em>Grow</em><br>
+    <span class="lined">Fearlessly.</span>
+  </h1>
+
+  <div class="accent-bar"></div>
+
+  <p class="body-text">
+    A new school year isn't just a date on the calendar — it's a blank page, 
+    a fresh breath, a chance to rewrite the story you tell yourself. 
+    <strong>You don't have to have it all figured out.</strong> You just have to show up — 
+    curious, open, and willing to put in the work.
+    <br><br>
+    Every great mind you admire once sat exactly where you're sitting now, 
+    wondering if they were enough. They were. <strong>So are you.</strong>
+  </p>
+
+  <div class="quotes-grid">
+    <div class="quote-card">
+      <p>Let your questions be louder than your doubts.</p>
+      <span>On curiosity</span>
+    </div>
+    <div class="quote-card">
+      <p>Progress, not perfection, is the real measure of learning.</p>
+      <span>On growth</span>
+    </div>
+    <div class="quote-card">
+      <p>The friends beside you are your greatest resource — lean on them.</p>
+      <span>On community</span>
+    </div>
+    <div class="quote-card">
+      <p>Rest is not the opposite of ambition. It is the foundation of it.</p>
+      <span>On balance</span>
+    </div>
+  </div>
+
+  <p class="closing">
+    This year, dare to raise your hand. Sit in the front. Ask the "silly" question 
+    — it's the one everyone else wanted to ask too. Celebrate small wins. 
+    Be kind to yourself when things get hard. Find your people and hold them close.
+    <span class="big">Make this year yours. ✦</span>
+  </p>
+
+  <div class="rule-bottom">
+    <span class="season-tag">School Year 2026 – 2027</span>
+  </div>
+
+  <div class="editor-profile">
+    <div class="editor-avatar">VM</div>
+    <div class="editor-info">
+      <p class="editor-tag">Written &amp; Edited by</p>
+      <p class="editor-name">Vianny Malele</p>
+      <a class="editor-email" href="mailto:vianneymalele49@gmail.com">vianneymalele49@gmail.com</a>
+    </div>
+  </div>
+
+</article>
+</body>
+</html>
